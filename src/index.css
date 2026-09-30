@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --vino: #571e26;
+  --vino-deep: #3a1218;
+  --paper: #fbf8f1;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+body {
+  @apply bg-paper text-grafite font-sans antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #571e26;
+  color: #fbf8f1;
+}
+
+/* ---------- foco visível (acessibilidade) ---------- */
+:focus-visible {
+  outline: 2px solid #b4552d;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---------- reveal on scroll ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------- fotografia: tratamento consistente ---------- */
+.photo-frame {
+  @apply overflow-hidden bg-creme-dark;
+}
+.photo-frame img {
+  @apply h-full w-full object-cover;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.photo-frame:hover img {
+  transform: scale(1.04);
+}
+
+/* ---------- linha editorial ---------- */
+.eyebrow {
+  @apply font-sans text-[11px] font-semibold uppercase tracking-widest2 text-terracota;
+}
+
+.h-display {
+  @apply font-display font-medium leading-[1.05] text-grafite;
+}
+
+/* ---------- hero ---------- */
+.hero-img {
+  animation: heroSettle 2.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes heroSettle {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-img {
+    animation: none;
+  }
+}
+
+.scroll-hint {
+  animation: hintFloat 2.2s ease-in-out infinite;
+}
+@keyframes hintFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 0.5;
+  }
+}
+
+/* ---------- menu mobile ---------- */
+.mobile-menu {
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s;
+}
+.mobile-menu[data-open='false'] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.mobile-menu[data-open='true'] {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ---------- underline editorial para links ---------- */
+.link-line {
+  position: relative;
+}
+.link-line::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+.link-line:hover::after,
+.link-line:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
